@@ -23,6 +23,16 @@ if (!admin.apps.length) {
 
 // Serverless function to send notifications
 export default async function handler(req, res) {
+  // Allow cross-origin requests (CORS headers)
+  res.setHeader('Access-Control-Allow-Origin', '*'); // You can restrict this to your front-end domain
+  res.setHeader('Access-Control-Allow-Methods', 'POST'); // Only allow POST requests
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allow content-type header for POST requests
+  
+  // Handle OPTIONS request for preflight check (CORS)
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
