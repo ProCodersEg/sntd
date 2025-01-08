@@ -3,11 +3,22 @@ import admin from 'firebase-admin';
 // Initialize Firebase Admin SDK
 let app;
 if (!admin.apps.length) {
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
 
-  app = admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
+  if (!serviceAccount) {
+    console.error("Firebase service account environment variable is missing.");
+    process.exit(1); // Exit the process if the environment variable is missing
+  }
+
+  try {
+    const parsedServiceAccount = JSON.parse(serviceAccount); // Parse the JSON content
+    admin.initializeApp({
+      credential: admin.credential.cert(parsedServiceAccount),
+    });
+  } catch (error) {
+    console.error("Failed to parse the Firebase service account key:", error);
+    process.exit(1); // Exit the process if JSON parsing fails
+  }
 }
 
 // Serverless function to send notifications
