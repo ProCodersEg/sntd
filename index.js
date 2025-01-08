@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 const cors = require('cors');
 
 // Initialize Firebase Admin SDK
-const serviceAccount = require('./path-to-your-service-account-key.json'); // Replace with your JSON file path
+const serviceAccount = require('https://raw.githubusercontent.com/ProCodersEg/sntd/refs/heads/main/saraha-5e7fd-firebase-adminsdk-5hpyg-39079dccfe.json'); // Replace with your JSON file path
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
